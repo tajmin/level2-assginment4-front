@@ -48,7 +48,10 @@ const BookForm = ({
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 bg-white p-6 shadow-sm rounded-sm"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="title">Title</Label>
