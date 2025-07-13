@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Books from "@/pages/Books";
 import Layout from "@/pages/Layout";
 import BorrowSummary from "@/pages/BorrowSummary";
+import AddBook from "@/pages/AddBook";
 
 const routes = [
   {
@@ -14,6 +15,10 @@ const routes = [
       {
         path: "/borrow-summary",
         element: <BorrowSummary />,
+      },
+      {
+        path: "/add-book",
+        element: <AddBook />,
       },
     ],
   },

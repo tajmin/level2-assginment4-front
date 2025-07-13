@@ -18,6 +18,9 @@ const Navbar = () => {
           <Link to="/" className="hover:text-primary">
             All Books
           </Link>
+          <Link to="/add-book" className="hover:text-primary">
+            Add Book
+          </Link>
           <Link to="/borrow-summary" className="hover:text-primary">
             Borrow Summary
           </Link>
@@ -35,6 +38,9 @@ const Navbar = () => {
               <nav className="flex flex-col space-y-4 mt-6">
                 <Link to="/" className="hover:text-primary">
                   All Books
+                </Link>
+                <Link to="/add-book" className="hover:text-primary">
+                  Add Book
                 </Link>
                 <Link to="/borrow-summary" className="hover:text-primary">
                   Borrow Summary
