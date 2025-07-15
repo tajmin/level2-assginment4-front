@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { ArrowLeftRight, Pencil, Trash } from "lucide-react";
 
+import { useGetBooksQuery } from "@/redux/api/api";
 import EditBookModal from "@/components/custom/EditBookModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,27 +22,7 @@ import {
 import type { BookFormDataType } from "@/validations/books";
 import DeleteBookModal from "@/components/custom/DeleteBookModal";
 import BorrowBookModal from "@/components/custom/BorrowBookModal";
-
-const mockBooks = [
-  {
-    id: "1",
-    title: "Atomic Habits",
-    author: "James Clear",
-    genre: "FICTION",
-    isbn: "9780735211292",
-    copies: 5,
-    available: true,
-  },
-  {
-    id: "2",
-    title: "1984",
-    author: "George Orwell",
-    genre: "Dystopian",
-    isbn: "9780451524935",
-    copies: 2,
-    available: false,
-  },
-];
+import { Loader } from "@/components/custom/Loader";
 
 const Books = () => {
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -56,6 +37,9 @@ const Books = () => {
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
   const [selectedAvailableCopies, setSelectedAvailableCopies] =
     useState<number>(0);
+
+  const { data, isLoading } = useGetBooksQuery();
+  const books = data?.data || [];
 
   const handleBorrow = (bookId: string, availableCopies: number) => {
     setSelectedBookId(bookId);
@@ -76,12 +60,14 @@ const Books = () => {
 
   const handleDeleteConfirm = async () => {
     if (!deleteBookId) return;
-    // 🔥 Call your delete mutation here
+
     console.log("Deleting book with ID:", deleteBookId);
     // toast.success("Book deleted successfully");
     setDeleteModalOpen(false);
     setDeleteBookId(null);
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <div>
@@ -94,7 +80,7 @@ const Books = () => {
         </Link>
       </div>
 
-      <div className="overflow-auto rounded-md border">
+      <div className="overflow-auto rounded-md border bg-white px-4 py-2">
         <Table>
           <TableHeader>
             <TableRow>
@@ -108,8 +94,8 @@ const Books = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockBooks.map((book) => (
-              <TableRow key={book.id}>
+            {books.map((book) => (
+              <TableRow key={book._id}>
                 <TableCell>{book.title}</TableCell>
                 <TableCell>{book.author}</TableCell>
                 <TableCell>{book.genre}</TableCell>
@@ -145,7 +131,9 @@ const Books = () => {
                           size="icon"
                           variant="outline"
                           className="hover:cursor-pointer bg-red-600"
-                          onClick={() => handleDeleteClick(book.id, book.title)}
+                          onClick={() =>
+                            handleDeleteClick(book._id as string, book.title)
+                          }
                         >
                           <Trash className="h-4 w-4 text-white" />
                         </Button>
@@ -159,7 +147,9 @@ const Books = () => {
                           size="icon"
                           variant="default"
                           className="hover:cursor-pointer"
-                          onClick={() => handleBorrow(book.id, book.copies)}
+                          onClick={() =>
+                            handleBorrow(book._id as string, book.copies)
+                          }
                         >
                           <ArrowLeftRight className="h-4 w-4" />
                         </Button>
