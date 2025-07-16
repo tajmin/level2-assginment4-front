@@ -1,5 +1,5 @@
-// src/components/BorrowForm.tsx
-
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,26 +7,24 @@ import {
   borrowValidation,
   type BorrowFormDataType,
 } from "@/validations/borrow";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 type BorrowFormProps = {
   onSubmit: (data: BorrowFormDataType) => void;
   availableCopies: number;
-  isLoading?: boolean;
+  isLoading: boolean;
 };
 
 const BorrowForm = ({
   onSubmit,
   availableCopies,
-  isLoading = false,
+  isLoading,
 }: BorrowFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<BorrowFormDataType>({
-    resolver: yupResolver(borrowValidation),
+    resolver: yupResolver(borrowValidation(availableCopies)),
   });
 
   return (
@@ -37,13 +35,8 @@ const BorrowForm = ({
           type="number"
           id="quantity"
           min={1}
-          max={availableCopies}
           {...register("quantity", {
             valueAsNumber: true,
-            max: {
-              value: availableCopies,
-              message: `Cannot borrow more than ${availableCopies} copies`,
-            },
           })}
         />
         {errors.quantity && (

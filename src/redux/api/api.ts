@@ -62,8 +62,8 @@ export const api = createApi({
     }),
 
     createBorrowBook: builder.mutation<IBorrowRes, IBorrow>({
-      query: (body) => ({
-        url: `/borrow`,
+      query: ({ book, ...body }) => ({
+        url: `/borrow/${book}`,
         method: "POST",
         body,
       }),

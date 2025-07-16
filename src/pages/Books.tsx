@@ -40,7 +40,7 @@ const Books = () => {
   const { data, isLoading } = useGetBooksQuery();
   const books = data?.data || [];
 
-  const handleBorrow = (bookId: string, availableCopies: number) => {
+  const handleShowBorrowModal = (bookId: string, availableCopies: number) => {
     setSelectedBookId(bookId);
     setSelectedAvailableCopies(availableCopies);
     setBorrowModalOpen(true);
@@ -141,7 +141,10 @@ const Books = () => {
                           variant="default"
                           className="hover:cursor-pointer"
                           onClick={() =>
-                            handleBorrow(book._id as string, book.copies)
+                            handleShowBorrowModal(
+                              book._id as string,
+                              book.copies
+                            )
                           }
                         >
                           <ArrowLeftRight className="h-4 w-4" />
