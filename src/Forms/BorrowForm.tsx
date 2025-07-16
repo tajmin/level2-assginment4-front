@@ -30,7 +30,9 @@ const BorrowForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <Label htmlFor="quantity">Quantity</Label>
+        <Label htmlFor="quantity" className="mb-2">
+          Quantity
+        </Label>
         <Input
           type="number"
           id="quantity"
@@ -45,7 +47,9 @@ const BorrowForm = ({
       </div>
 
       <div>
-        <Label htmlFor="dueDate">Due Date</Label>
+        <Label htmlFor="dueDate" className="mb-2">
+          Due Date
+        </Label>
         <Input type="date" id="dueDate" {...register("dueDate")} />
         {errors.dueDate && (
           <p className="text-sm text-red-500">{errors.dueDate.message}</p>
@@ -53,7 +57,11 @@ const BorrowForm = ({
       </div>
 
       <div className="text-right pt-2">
-        <Button type="submit" disabled={isLoading}>
+        <Button
+          className="hover:cursor-pointer"
+          type="submit"
+          disabled={isLoading}
+        >
           {isLoading ? "Processing..." : "Submit"}
         </Button>
       </div>

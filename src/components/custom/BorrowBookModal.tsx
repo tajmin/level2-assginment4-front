@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 import {
   Dialog,
@@ -34,13 +35,11 @@ const BorrowBookModal = ({
         dueDate: data.dueDate.toISOString(),
       };
       const res = await createBorrowBook(payload).unwrap();
-      console.log("Borrowed Book:", { bookId, ...data, res });
-
-      //   toast.success("Book borrowed successfully");
+      toast.success(res.message);
       onClose();
       navigate("/borrow-summary");
-    } catch (error) {
-      //   toast.error("Failed to borrow book");
+    } catch (err: any) {
+      toast.error(err?.data?.message);
     }
   };
 

@@ -9,6 +9,7 @@ import { useUpdateBookMutation } from "@/redux/api/api";
 import type { IBook } from "@/types/books.type";
 import type { BookFormDataType } from "@/validations/books";
 import { Loader } from "./Loader";
+import { toast } from "sonner";
 
 type EditBookModalProps = {
   isOpen: boolean;
@@ -28,16 +29,12 @@ const EditBookModal = ({
   const handleEdit = async (data: BookFormDataType) => {
     try {
       const res = await updateBook({ _id: book._id, ...data }).unwrap();
-      console.log(res);
-      // toast.success("Book updated successfully");
+      toast.success(res.message);
       onSuccess?.();
       onClose();
     } catch (err: any) {
-      // toast.error(err?.data?.message || "Failed to update book");
+      toast.error(err?.data?.message);
     }
-
-    onSuccess?.();
-    onClose();
   };
 
   if (isLoading) return <Loader />;

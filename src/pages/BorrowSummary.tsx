@@ -1,6 +1,14 @@
 import { useGetBorrowSummaryQuery } from "@/redux/api/api";
 import { Loader } from "@/components/custom/Loader";
 import { Card } from "@/components/ui/card";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui/table";
 
 const BorrowSummary = () => {
   const { data, isLoading } = useGetBorrowSummaryQuery();
@@ -12,26 +20,26 @@ const BorrowSummary = () => {
     <div className="p-4">
       <h2 className="text-2xl font-semibold mb-4">Borrow Summary</h2>
 
-      <Card className="overflow-x-auto p-0 rounded-sm">
+      <Card className="overflow-x-auto p-4 rounded-sm">
         {
-          <table className="min-w-full text-sm">
-            <thead className="bg-gray-100 text-left">
-              <tr>
-                <th className="px-4 py-2 font-medium">Book Title</th>
-                <th className="px-4 py-2 font-medium">ISBN</th>
-                <th className="px-4 py-2 font-medium">Total Borrowed</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Book Title</TableHead>
+                <TableHead>ISBN</TableHead>
+                <TableHead>Total Borrowed</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {borrowSummary.map((item, index) => (
-                <tr key={index} className="border-t">
-                  <td className="px-4 py-2">{item.book.title}</td>
-                  <td className="px-4 py-2">{item.book.isbn}</td>
-                  <td className="px-4 py-2">{item.totalQuantity}</td>
-                </tr>
+                <TableRow key={index}>
+                  <TableCell>{item.book.title}</TableCell>
+                  <TableCell>{item.book.isbn}</TableCell>
+                  <TableCell>{item.totalQuantity}</TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         }
       </Card>
     </div>

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, type Resolver } from "react-hook-form";
 import { useCreateBookMutation } from "@/redux/api/api";
+import { toast } from "sonner";
 
 import BookForm from "@/Forms/BookForm";
 import { bookValidation, type BookFormDataType } from "@/validations/books";
@@ -21,12 +22,11 @@ const AddBook = () => {
   const handleCreateBook = async (data: BookFormDataType) => {
     try {
       const res = await createBook(data).unwrap();
-      console.log(res);
-      // toast.success(res.message || "Book added successfully!");
+      toast.success(res.message);
       reset();
-      navigate("/"); // redirect to home or books list
+      navigate("/");
     } catch (err: any) {
-      // toast.error(err?.data?.message || "Failed to create book.");
+      toast.error(err?.data?.message);
     }
   };
 

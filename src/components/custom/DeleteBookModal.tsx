@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -31,12 +32,11 @@ const DeleteBookModal = ({
 
     try {
       const res = await deleteBook(bookId).unwrap();
-      console.log(res);
-      // toast.success("Book deleted successfully");
+      toast.success(res.message);
       onSuccess?.();
       onClose();
-    } catch (error: any) {
-      // toast.error(error?.data?.message || "Failed to delete book");
+    } catch (err: any) {
+      toast.error(err?.data?.message);
     }
   };
 

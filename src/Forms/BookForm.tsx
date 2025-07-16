@@ -54,7 +54,9 @@ const BookForm = ({
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="title">Title</Label>
+          <Label htmlFor="title" className="mb-2">
+            Title
+          </Label>
           <Input id="title" {...register("title")} />
           {errors.title && (
             <p className="text-sm text-red-500">{errors.title.message}</p>
@@ -62,7 +64,9 @@ const BookForm = ({
         </div>
 
         <div>
-          <Label htmlFor="author">Author</Label>
+          <Label htmlFor="author" className="mb-2">
+            Author
+          </Label>
           <Input id="author" {...register("author")} />
           {errors.author && (
             <p className="text-sm text-red-500">{errors.author.message}</p>
@@ -70,7 +74,9 @@ const BookForm = ({
         </div>
 
         <div>
-          <Label htmlFor="genre">Genre</Label>
+          <Label htmlFor="genre" className="mb-2">
+            Genre
+          </Label>
           <Select
             defaultValue={initialValues.genre}
             onValueChange={(val) =>
@@ -94,7 +100,9 @@ const BookForm = ({
         </div>
 
         <div>
-          <Label htmlFor="isbn">ISBN</Label>
+          <Label htmlFor="isbn" className="mb-2">
+            ISBN
+          </Label>
           <Input id="isbn" {...register("isbn")} />
           {errors.isbn && (
             <p className="text-sm text-red-500">{errors.isbn.message}</p>
@@ -102,7 +110,9 @@ const BookForm = ({
         </div>
 
         <div>
-          <Label htmlFor="copies">Copies</Label>
+          <Label htmlFor="copies" className="mb-2">
+            Copies
+          </Label>
           <Input
             id="copies"
             type="number"
@@ -124,7 +134,9 @@ const BookForm = ({
       </div>
 
       <div>
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description" className="mb-2">
+          Description
+        </Label>
         <Textarea id="description" {...register("description")} />
         {errors.description && (
           <p className="text-sm text-red-500">{errors.description.message}</p>
@@ -132,7 +144,9 @@ const BookForm = ({
       </div>
 
       <div className="pt-4 flex justify-end gap-2">
-        <Button type="submit">Save Changes</Button>
+        <Button type="submit" className="hover:cursor-pointer">
+          Save Changes
+        </Button>
       </div>
     </form>
   );
