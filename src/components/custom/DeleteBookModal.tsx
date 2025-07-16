@@ -31,6 +31,7 @@ const DeleteBookModal = ({
 
     try {
       const res = await deleteBook(bookId).unwrap();
+      console.log(res);
       // toast.success("Book deleted successfully");
       onSuccess?.();
       onClose();

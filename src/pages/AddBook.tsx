@@ -21,6 +21,7 @@ const AddBook = () => {
   const handleCreateBook = async (data: BookFormDataType) => {
     try {
       const res = await createBook(data).unwrap();
+      console.log(res);
       // toast.success(res.message || "Book added successfully!");
       reset();
       navigate("/"); // redirect to home or books list

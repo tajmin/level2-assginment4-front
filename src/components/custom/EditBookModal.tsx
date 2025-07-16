@@ -28,6 +28,7 @@ const EditBookModal = ({
   const handleEdit = async (data: BookFormDataType) => {
     try {
       const res = await updateBook({ _id: book._id, ...data }).unwrap();
+      console.log(res);
       // toast.success("Book updated successfully");
       onSuccess?.();
       onClose();
