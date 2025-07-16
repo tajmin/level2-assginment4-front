@@ -6,20 +6,41 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useDeleteBookMutation } from "@/redux/api/api";
+import { Loader } from "./Loader";
 
 type DeleteBookModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onSuccess?: () => void;
   bookTitle?: string;
+  bookId: string;
 };
 
 const DeleteBookModal = ({
   isOpen,
   onClose,
-  onConfirm,
+  onSuccess,
   bookTitle,
+  bookId,
 }: DeleteBookModalProps) => {
+  const [deleteBook, { isLoading }] = useDeleteBookMutation();
+
+  const handleDelete = async () => {
+    if (!bookId) return;
+
+    try {
+      const res = await deleteBook(bookId).unwrap();
+      // toast.success("Book deleted successfully");
+      onSuccess?.();
+      onClose();
+    } catch (error: any) {
+      // toast.error(error?.data?.message || "Failed to delete book");
+    }
+  };
+
+  if (isLoading) return <Loader />;
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md">
@@ -38,7 +59,7 @@ const DeleteBookModal = ({
           <Button variant="ghost" onClick={onClose}>
             Cancel
           </Button>
-          <Button variant="destructive" onClick={onConfirm}>
+          <Button variant="destructive" onClick={handleDelete}>
             Yes, Delete
           </Button>
         </DialogFooter>

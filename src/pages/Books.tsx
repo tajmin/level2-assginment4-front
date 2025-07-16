@@ -19,21 +19,20 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import type { BookFormDataType } from "@/validations/books";
 import DeleteBookModal from "@/components/custom/DeleteBookModal";
 import BorrowBookModal from "@/components/custom/BorrowBookModal";
 import { Loader } from "@/components/custom/Loader";
+import type { IBook } from "@/types/books.type";
 
 const Books = () => {
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [selectedBook, setSelectedBook] = useState<BookFormDataType | null>(
-    null
-  );
+  const [selectedBook, setSelectedBook] = useState<IBook | null>(null);
+
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteBookId, setDeleteBookId] = useState<string | null>(null);
-  const [deleteBookTitle, setDeleteBookTitle] = useState<string>("");
-  const [borrowModalOpen, setBorrowModalOpen] = useState(false);
+  const [deleteBookTitle, setDeleteBookTitle] = useState<string | null>(null);
 
+  const [borrowModalOpen, setBorrowModalOpen] = useState(false);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
   const [selectedAvailableCopies, setSelectedAvailableCopies] =
     useState<number>(0);
@@ -47,24 +46,15 @@ const Books = () => {
     setBorrowModalOpen(true);
   };
 
-  const handleEdit = (book: BookFormDataType) => {
+  const handleShowEditModal = (book: IBook) => {
     setSelectedBook(book);
     setEditModalOpen(true);
   };
 
-  const handleDeleteClick = (bookId: string, title: string) => {
+  const handleShowDeleteModal = (bookId: string, title: string) => {
     setDeleteBookId(bookId);
     setDeleteBookTitle(title);
     setDeleteModalOpen(true);
-  };
-
-  const handleDeleteConfirm = async () => {
-    if (!deleteBookId) return;
-
-    console.log("Deleting book with ID:", deleteBookId);
-    // toast.success("Book deleted successfully");
-    setDeleteModalOpen(false);
-    setDeleteBookId(null);
   };
 
   if (isLoading) return <Loader />;
@@ -117,7 +107,7 @@ const Books = () => {
                           size="icon"
                           variant="outline"
                           className="hover:cursor-pointer"
-                          onClick={() => handleEdit(book)}
+                          onClick={() => handleShowEditModal(book)}
                         >
                           <Pencil className="h-4 w-4" />
                         </Button>
@@ -132,7 +122,10 @@ const Books = () => {
                           variant="outline"
                           className="hover:cursor-pointer bg-red-600"
                           onClick={() =>
-                            handleDeleteClick(book._id as string, book.title)
+                            handleShowDeleteModal(
+                              book._id as string,
+                              book.title
+                            )
                           }
                         >
                           <Trash className="h-4 w-4 text-white" />
@@ -172,7 +165,6 @@ const Books = () => {
           }}
           book={selectedBook}
           onSuccess={() => {
-            // Refetch or update UI here if needed
             setEditModalOpen(false);
             setSelectedBook(null);
           }}
@@ -180,9 +172,18 @@ const Books = () => {
       )}
       <DeleteBookModal
         isOpen={deleteModalOpen}
-        onClose={() => setDeleteModalOpen(false)}
-        onConfirm={handleDeleteConfirm}
-        bookTitle={deleteBookTitle}
+        bookId={deleteBookId as string}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setDeleteBookId(null);
+          setDeleteBookTitle(null);
+        }}
+        onSuccess={() => {
+          setDeleteModalOpen(false);
+          setDeleteBookId(null);
+          setDeleteBookTitle(null);
+        }}
+        bookTitle={deleteBookTitle as string}
       />
       {selectedBookId && (
         <BorrowBookModal
