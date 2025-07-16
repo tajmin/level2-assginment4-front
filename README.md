@@ -1,70 +1,68 @@
-# React + TypeScript + Vite
+# 📚 Library Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack library management web application built with **React**, **Redux Toolkit**, **RTK Query**, **TypeScript**, and **Node.js**. Users can manage books and borrowing records efficiently via a clean and responsive UI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔧 Tech Stack
 
-## Expanding the ESLint configuration
+### Frontend
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19 with Vite
+- TypeScript
+- Redux Toolkit & RTK Query
+- React Hook Form + Yup
+- Tailwind CSS
+- ShadCN UI + Radix UI
+- Sonner (toast notifications)
+- React Router v7
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Backend
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- Node.js & Express
+- TypeScript
+- Mongoose & MongoDB
+- Zod for validation
+- Custom error handling
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 🚀 Features
+
+### 🗂 Books
+
+- Create, Read, Update, Delete (CRUD) operations of book
+- Validation for book fields (e.g., ISBN, copies)
+- Book availability based on borrow records
+
+### 📦 Borrow
+
+- Borrow books with due date
+- Validation: cannot borrow more than available copies
+- Borrow summary with aggregation (total borrowed per book)
+
+### 🎨 UI & UX
+
+- Fully responsive layout
+- Modal-based forms (Edit, Delete, Borrow)
+- Toast notifications for success/error
+- Loading and error states
+
+---
+
+## 🛠 Installation
+
+```bash
+# Clone repo
+git clone git@github.com:tajmin/level2-assginment4-front.git
+cd level2-assginment4-front
+
+# Install dependencies
+cd frontend
+npm install
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Live
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-# level2-assginment4-front
+[Hosted on Vercel](https://level2-assginment4-front.vercel.app/)
